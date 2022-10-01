@@ -1,4 +1,4 @@
-import { Button, Flex, Link } from "@chakra-ui/react";
+import { Button, Flex, HStack, Link } from "@chakra-ui/react";
 
 export const Navbar = () => {
   return (
@@ -11,14 +11,14 @@ export const Navbar = () => {
       color="#fff"
       fontFamily="SF Pro"
     >
-      <Flex justifyContent="flex-start" alignItems="center">
+      <HStack justifyContent="flex-start" alignItems="center" spacing={12}>
         <Link href="/" fontWeight="bold" fontFamily="SF Pro Rounded">
           SUITE
         </Link>
         <Link href="/create">Create</Link>
         <Link href="/position">Position</Link>
         <Link href="/docs">Docs</Link>
-      </Flex>
+      </HStack>
       <Flex>
         <Button backgroundColor="#D9475A" borderRadius={50}>
           Connect Wallet
