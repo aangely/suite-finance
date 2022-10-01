@@ -9,10 +9,11 @@ export const Navbar = () => {
       height={76}
       padding={30}
       color="#fff"
+      fontFamily="SF Pro"
     >
       <Flex justifyContent="flex-start" alignItems="center">
-        <Link href="/" fontWeight="bold">
-          Suite
+        <Link href="/" fontWeight="bold" fontFamily="SF Pro Rounded">
+          SUITE
         </Link>
         <Link href="/create">Create</Link>
         <Link href="/position">Position</Link>

@@ -2,7 +2,8 @@ export const styles = {
   global: {
     body: {
       color: "#ffffff",
-      backgroundColor: "#0d0d0d",
+      background: "linear-gradient(to bottom, rgba(234, 238, 244, 0) 0%, rgba(168, 168, 168, 0.5) 97.92%)",
+      fontFamily: "Encode Sans",
     },
   },
 };
