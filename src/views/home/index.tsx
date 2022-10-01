@@ -1,9 +1,15 @@
-import { Intro } from "./components/Intro";
+import { Container, VStack } from "@chakra-ui/react";
+
+import { IntroSection } from "./components/IntroSection";
+import { InvestSection } from "./components/InvestSection";
 
 export const Page = () => {
   return (
-    <>
-      <Intro />
-    </>
+    <Container maxWidth="full" paddingX="100" color="#323c52" marginTop="60px">
+      <VStack alignItems="flex-start" spacing={12}>
+        <IntroSection />
+        <InvestSection />
+      </VStack>
+    </Container>
   );
 };

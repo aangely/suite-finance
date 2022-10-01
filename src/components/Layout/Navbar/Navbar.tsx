@@ -2,7 +2,7 @@ import { Button, Flex, HStack, Link } from "@chakra-ui/react";
 
 export const Navbar = () => {
   return (
-    <Flex
+    <HStack
       justifyContent="space-between"
       alignItems="center"
       backgroundColor="#323C52"
@@ -19,11 +19,11 @@ export const Navbar = () => {
         <Link href="/position">Position</Link>
         <Link href="/docs">Docs</Link>
       </HStack>
-      <Flex>
+      <Link>
         <Button backgroundColor="#D9475A" borderRadius={50}>
           Connect Wallet
         </Button>
-      </Flex>
-    </Flex>
+      </Link>
+    </HStack>
   );
 };
