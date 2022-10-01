@@ -1,1 +1,1 @@
-export { Page as default } from "../views/index";
+export { Page as default } from "@app/views/home";
