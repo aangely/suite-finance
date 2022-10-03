@@ -96,7 +96,7 @@ export const PlainTable = () => {
                   {token.price}
                 </Text>
               </Td>
-              <Td backgroundColor="rgba(255, 255, 255, 0.5)">
+              <Td borderRightRadius="9px" backgroundColor="rgba(255, 255, 255, 0.5)">
                 <Box textAlign="right">
                   <Button
                     bgGradient="linear-gradient(265.49deg, #E78C99 -27.48%, #E5E5E5 117.38%)"

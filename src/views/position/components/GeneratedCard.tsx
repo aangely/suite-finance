@@ -1,38 +1,20 @@
 import { Box, Flex, Wrap, WrapItem } from "@chakra-ui/react";
+import shallow from "zustand/shallow";
 
 import { Card } from "@app/components/Card";
+import { Position, usePositionStore } from "@app/store/usePositionStore";
 import { tokenList } from "@app/store/useSellStore";
 
 import { GeneralPositionCard } from "./GeneralPositionCard";
 
-import type { Position } from "@app/store/usePositionStore";
 import type { FlexProps } from "@chakra-ui/react";
 
-const mockData: Position[] = [
-  {
-    id: 0,
-    token: tokenList[0],
-    tokens: tokenList.slice(2, 5),
-    time: "monthly",
-    startTime: new Date().toDateString(),
-  },
-  {
-    id: 1,
-    token: tokenList[0],
-    tokens: tokenList.slice(2, 5),
-    time: "monthly",
-    startTime: new Date().toDateString(),
-  },
-  {
-    id: 2,
-    token: tokenList[0],
-    tokens: tokenList.slice(2, 5),
-    time: "monthly",
-    startTime: new Date().toDateString(),
-  },
-];
-
 export const GeneratedCard = (props: Omit<FlexProps, "children">) => {
+  const { finishedPositions, pendingPositions } = usePositionStore(
+    (state) => ({ finishedPositions: state.finishedPositions, pendingPositions: state.pendingPositions }),
+    shallow,
+  );
+  const all = [...finishedPositions, ...pendingPositions];
   return (
     <Flex {...props} flexDirection="column" backgroundColor="rgba(255, 255, 255, 0.6)" borderRadius="18px" padding="30px">
       <Box
@@ -47,8 +29,16 @@ export const GeneratedCard = (props: Omit<FlexProps, "children">) => {
       >
         Generated
       </Box>
-      <Wrap spacing="18px" marginTop="18px" justifyContent="space-between">
-        {mockData.map((data) => (
+      <Wrap
+        spacing="18px"
+        marginTop="18px"
+        sx={{
+          [".chakra-wrap__list"]: {
+            justifyContent: "space-between",
+          },
+        }}
+      >
+        {all.map((data) => (
           <WrapItem key={data.id} width="calc(92% / 2)">
             <GeneralPositionCard data={data} />
           </WrapItem>

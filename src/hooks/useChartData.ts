@@ -10,7 +10,7 @@ const getRecentTimePrice = (prices: TimePrice[], index: number): TimePrice => {
 };
 
 const getTimeKey = (time: number) => {
-  const date = new Date(time * 1000);
+  const date = new Date(time);
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const day = date.getDate().toString().padStart(2, "0");
@@ -42,13 +42,22 @@ function constructPriceChartData({
 }
 
 export const useChartData = (sellSlug: string, receiveSlugs: string[]) => {
-  const fetchSell = () => fetch(getUrl(sellSlug), { method: "get" }).then((r) => r.json());
+  const fetchSell = () =>
+    fetch(getUrl(sellSlug), { method: "get" })
+      .then((r) => r.json())
+      .then((r) => {
+        const prices = r.prices.map(([time, price]: [number, number]) => [time * 1000, price]);
+        return { ...r, prices };
+      });
   const fetchReceive = () =>
     Promise.all(
       receiveSlugs.map((slug) =>
         fetch(getUrl(slug), { method: "get" })
           .then((r) => r.json())
-          .then((r) => ({ slug: slug, data: r })),
+          .then((r) => {
+            const prices = r.prices.map(([time, price]: [number, number]) => [time * 1000, price]);
+            return { slug, data: { ...r, prices } };
+          }),
       ),
     );
   const { data: sellData } = useSWR<{ prices: TimePrice[] }>(sellSlug, fetchSell);

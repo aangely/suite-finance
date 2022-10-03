@@ -7,12 +7,14 @@ type Token = _Token & { percent: number };
 export const useReceiveStore = create<{
   total: number;
   tokens: Token[];
+  clear: () => void;
   addToken: (token: Token) => void;
   removeToken: (token: Token) => void;
   setPercent: (token: Token, percent: number) => void;
 }>((set, get) => ({
   total: 0,
   tokens: [],
+  clear: () => set({ total: 0, tokens: [] }),
   addToken: (token) => {
     const prevState = get();
     const exist = prevState.tokens;

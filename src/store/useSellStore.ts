@@ -100,11 +100,16 @@ const fuseOptions: Fuse.IFuseOptions<Token> = {
 
 export const tokenListSearch = new Fuse(tokenList, fuseOptions);
 
-export const useSellStore = create<{ setToken: (token: Token) => void; token: Token; balance: number; setBalance: (b: number) => void }>(
-  (set) => ({
-    token: tokenList[0],
-    balance: 0,
-    setBalance: (b) => set({ balance: b }),
-    setToken: (token) => set({ token, balance: 0 }),
-  }),
-);
+export const useSellStore = create<{
+  setToken: (token: Token) => void;
+  token: Token;
+  balance: number;
+  setBalance: (b: number) => void;
+  clear: () => void;
+}>((set) => ({
+  token: tokenList[0],
+  balance: 0,
+  setBalance: (b) => set({ balance: b }),
+  setToken: (token) => set({ token, balance: 0 }),
+  clear: () => set({ token: tokenList[0], balance: 0 }),
+}));

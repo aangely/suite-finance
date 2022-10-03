@@ -6,6 +6,7 @@ import type { Position } from "@app/store/usePositionStore";
 import type { FlexProps } from "@chakra-ui/react";
 
 export const GeneralPositionCard = ({ data, ...resProps }: Omit<FlexProps, "children"> & { data: Position }) => {
+  const { status } = data;
   return (
     <Card {...resProps} width="100%" paddingX="30px">
       <VStack spacing="8px">
@@ -20,8 +21,8 @@ export const GeneralPositionCard = ({ data, ...resProps }: Omit<FlexProps, "chil
         <Text fontSize="15px" fontWeight="600">
           Frequency: {data.time}
         </Text>
-        <Text fontSize="15px" fontWeight="600">
-          On Going
+        <Text fontSize="15px" fontWeight="600" color={status === "finished" ? "green" : status === "pending" ? "black" : "white"}>
+          {status === "finished" ? "Finished" : status === "started" ? "On Going" : "Not Started"}
         </Text>
         <Button
           borderRadius="full"
