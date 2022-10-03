@@ -63,7 +63,6 @@ export const useChartData = (sellSlug: string, receiveSlugs: string[]) => {
     const time = getTimeKey(timePrice[0]);
     currentCurrencyUSDPriceObject[time] = { time, price: timePrice[1] };
   });
-  console.log(currentCurrencyUSDPriceObject, sellData?.prices);
   return receiveData?.map(({ slug, data: { prices, price_change } }) => ({
     slug,
     price_change,
