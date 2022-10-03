@@ -27,6 +27,7 @@ specifiers:
   highcharts: ^10.2.1
   highcharts-react-official: ^3.1.0
   next: 12.3.1
+  nextjs-progressbar: ^0.0.14
   prettier: ^2.7.1
   react: 18.2.0
   react-datepicker: ^4.8.0
@@ -49,6 +50,7 @@ dependencies:
   highcharts: 10.2.1
   highcharts-react-official: 3.1.0_l23couz3wy5y43nwcmuqorj2wu
   next: 12.3.1_ru2bdujs5wv7zrmz55pdteej2m
+  nextjs-progressbar: 0.0.14_next@12.3.1+react@18.2.0
   react: 18.2.0
   react-datepicker: 4.8.0_biqbaboplfbrettd7655fr4n2y
   react-dom: 18.2.0_react@18.2.0
@@ -4056,6 +4058,18 @@ packages:
       - babel-plugin-macros
     dev: false
 
+  /nextjs-progressbar/0.0.14_next@12.3.1+react@18.2.0:
+    resolution: {integrity: sha512-AXYXHDN6M52AwFnGqH/vlwyo0gbC9zM7QS/4ryOTI0RUqfze5FJl8uSrxKJMzK6hGFdDeQXcZoWsLGXeCVtTwg==}
+    peerDependencies:
+      next: '>= 6.0.0'
+      react: '>= 16.0.0'
+    dependencies:
+      next: 12.3.1_ru2bdujs5wv7zrmz55pdteej2m
+      nprogress: 0.2.0
+      prop-types: 15.8.1
+      react: 18.2.0
+    dev: false
+
   /node-releases/2.0.6:
     resolution: {integrity: sha512-PiVXnNuFm5+iYkLBNeq5211hvO38y63T0i2KKh2KnUs3RpzJ+JtODFjkD8yjLwnDkTYF1eKXheUwdssR+NRZdg==}
 
@@ -4066,6 +4080,10 @@ packages:
   /normalize-url/4.5.1:
     resolution: {integrity: sha512-9UZCFRHQdNrfTpGg8+1INIg93B6zE0aXMVFkw1WFwvO4SlZywU6aLg5Of0Ap/PgcbSw4LNxvMWXMeugwMCX0AA==}
     engines: {node: '>=8'}
+    dev: false
+
+  /nprogress/0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
     dev: false
 
   /object-assign/4.1.1:

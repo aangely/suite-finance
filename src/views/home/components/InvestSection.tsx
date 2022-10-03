@@ -1,6 +1,8 @@
 import { Button, Heading, HStack, Link, Text, VStack } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 
 export const InvestSection = () => {
+  const { push } = useRouter();
   return (
     <VStack alignItems="flex-start" width="100%" spacing={6}>
       <Heading>Auto-invest</Heading>
@@ -26,6 +28,7 @@ export const InvestSection = () => {
             height={16}
             borderRadius={12}
             fontSize={18}
+            onClick={() => push("/create")}
             color="#000"
           >
             Create a plan

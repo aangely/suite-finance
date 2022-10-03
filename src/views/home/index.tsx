@@ -2,6 +2,7 @@ import { Container, VStack } from "@chakra-ui/react";
 
 import { IntroSection } from "./components/IntroSection";
 import { InvestSection } from "./components/InvestSection";
+import { PlainTable } from "./components/PlainTable";
 
 export const Page = () => {
   return (
@@ -10,6 +11,7 @@ export const Page = () => {
         <IntroSection />
         <InvestSection />
       </VStack>
+      <PlainTable />
     </Container>
   );
 };

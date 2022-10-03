@@ -12,11 +12,11 @@ export const IntroSection = () => {
       >
         Suite
       </Heading>
-      <Text>
+      <Text fontSize="24px" lineHeight="38px">
         Enable users to make recurring purchase options with single or multiple tokens and make improved investments by adopting the
         Dollar-cost Averaging strategy.
       </Text>
-      <Text>
+      <Text fontSize="24px" lineHeight="38px">
         Lower barrier of entry to DeFi investments for everyday users Improve overall DeFi experience on Cronos by synergising with other
         existing protocols and providing users with recurring purchase options in decentralized manner
       </Text>
