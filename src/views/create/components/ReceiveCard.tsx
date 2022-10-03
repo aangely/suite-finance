@@ -1,20 +1,21 @@
 import {
+  useDisclosure,
+  Text,
   Button,
   HStack,
-  Text,
   Image,
-  Icon,
   Modal,
-  useDisclosure,
   ModalOverlay,
   ModalContent,
   ModalBody,
   Input,
   Flex,
+  Icon,
   VStack,
+  Box,
+  Wrap,
 } from "@chakra-ui/react";
-import { useEffect, useMemo, useState } from "react";
-import { FiChevronDown } from "react-icons/fi";
+import { useMemo, useState } from "react";
 import { RiErrorWarningLine } from "react-icons/ri";
 import shallow from "zustand/shallow";
 
@@ -25,22 +26,23 @@ import { tokenListSearch, useSellStore } from "@app/store/useSellStore";
 
 import type { FlexProps } from "@chakra-ui/react";
 
-export const SellCard = (props: Omit<FlexProps, "children">) => {
-  const { token, setToken } = useSellStore((state) => ({ token: state.token, setToken: state.setToken }), shallow);
+export const ReceiveCard = (props: Omit<FlexProps, "children">) => {
+  const { tokens, addToken, removeToken } = useReceiveStore(
+    (state) => ({ tokens: state.tokens, addToken: state.addToken, removeToken: state.removeToken }),
+    shallow,
+  );
   const [value, setValue] = useState("");
   const { isOpen, onClose: _onClose, onOpen } = useDisclosure();
   const debouncedValue = useDebouncedValue(value);
-  const result = useMemo(() => tokenListSearch.search(debouncedValue), [debouncedValue]);
+  const _result = useMemo(() => tokenListSearch.search(debouncedValue), [debouncedValue]);
   const onClose = () => {
     setValue("");
     _onClose();
   };
-  useEffect(() => {
-    useReceiveStore.getState().removeToken({ ...token, percent: 0 });
-  }, [token]);
+  const result = _result.filter(({ item }) => item.name !== useSellStore.getState().token.name);
   return (
     <Card {...props}>
-      <Text fontWeight="600">You sell</Text>
+      <Text fontWeight="600">You receive</Text>
       <Button
         marginTop="6px"
         borderRadius="full"
@@ -54,10 +56,29 @@ export const SellCard = (props: Omit<FlexProps, "children">) => {
           background: "linear-gradient(180deg, #8E2424 16.67%, #4D3737 100%)",
         }}
       >
-        <HStack spacing="2">
-          <Image src={token.icon} alt={token.symbol} width="26px" height="26px" />
-          <Text>{token.symbol}</Text>
-          <Icon as={FiChevronDown} w="22px" h="22px" />
+        <HStack spacing="2" overflowX="auto">
+          {tokens.map((token) => (
+            <Box
+              key={token.name}
+              flexShrink="0"
+              position="relative"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                removeToken(token);
+              }}
+            >
+              <Image
+                src={token.icon}
+                alt={token.name}
+                width="26px"
+                height="26px"
+                _hover={{
+                  filter: "blur(1px)",
+                }}
+              />
+            </Box>
+          ))}
         </HStack>
       </Button>
       <Modal isOpen={isOpen} onClose={onClose} size="lg">
@@ -93,37 +114,36 @@ export const SellCard = (props: Omit<FlexProps, "children">) => {
                 </Flex>
               )}
               <VStack spacing="8px" alignItems="flex-start">
-                {result.map(({ item }) => (
-                  <Flex key={item.name} justifyContent="space-between" width="100%">
-                    <HStack spacing="6px">
-                      <Image src={item.icon} alt={item.name} width="30px" height="30px" />
-                      <Text textTransform="capitalize">{item.name}</Text>
-                      <Text>({item.symbol})</Text>
-                    </HStack>
-                    <Button
-                      backgroundColor="#323C52"
-                      fontSize="15px"
-                      fontWeight="700"
-                      lineHeight="32px"
-                      paddingY="0"
-                      borderRadius="6px"
-                      height="auto"
-                      disabled={token.name === item.name}
-                      _hover={{
-                        backgroundColor: "#323C52",
-                      }}
-                      _active={{
-                        backgroundColor: "#323C52",
-                      }}
-                      onClick={() => {
-                        setToken(item);
-                        onClose();
-                      }}
-                    >
-                      Add
-                    </Button>
-                  </Flex>
-                ))}
+                {result.map(({ item }) => {
+                  const hasAdded = tokens.some((token) => token.name === item.name);
+                  return (
+                    <Flex key={item.name} justifyContent="space-between" width="100%">
+                      <HStack spacing="6px">
+                        <Image src={item.icon} alt={item.name} width="30px" height="30px" />
+                        <Text textTransform="capitalize">{item.name}</Text>
+                        <Text>({item.symbol})</Text>
+                      </HStack>
+                      <Button
+                        backgroundColor="#323C52"
+                        fontSize="15px"
+                        fontWeight="700"
+                        lineHeight="32px"
+                        paddingY="0"
+                        borderRadius="6px"
+                        height="auto"
+                        _hover={{
+                          backgroundColor: "#323C52",
+                        }}
+                        _active={{
+                          backgroundColor: "#323C52",
+                        }}
+                        onClick={() => (hasAdded ? removeToken({ ...item, percent: 0 }) : addToken({ ...item, percent: 0 }))}
+                      >
+                        {hasAdded ? "Delete" : "Add"}
+                      </Button>
+                    </Flex>
+                  );
+                })}
               </VStack>
             </Card>
           </ModalBody>

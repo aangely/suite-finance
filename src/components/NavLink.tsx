@@ -1,26 +1,27 @@
-import { Text } from '@chakra-ui/react';
-import { ReactNode } from 'react';
+import { Text } from "@chakra-ui/react";
 
-import { useLinkHighlighted } from '@app/hooks/useLinkHighlighted';
+import { useLinkHighlighted } from "@app/hooks/useLinkHighlighted";
 
-import { Link, LinkProps } from './Link';
+import { Link } from "./Link";
 
-import type { TextProps } from '@chakra-ui/react';
+import type { LinkProps } from "./Link";
+import type { TextProps } from "@chakra-ui/react";
+import type { ReactNode } from "react";
 
 type NavLinkProps = {
-  linkProps: Omit<LinkProps, 'children'>;
-  textProps?: Omit<TextProps, 'children'>;
+  linkProps: Omit<LinkProps, "children">;
+  textProps?: Omit<TextProps, "children">;
   children: ReactNode;
 };
 
 const DEFAULT_PROPS: TextProps = {
-  fontWeight: 'semibold',
+  fontWeight: "semibold",
 };
 
 export const NavLink = ({ linkProps, textProps, children }: NavLinkProps) => {
   const { href } = linkProps;
 
-  const isHighlighted = useLinkHighlighted({ href: typeof href === 'string' ? href : '' });
+  const isHighlighted = useLinkHighlighted({ href: typeof href === "string" ? href : "" });
 
   const props = { ...DEFAULT_PROPS, ...textProps };
 
@@ -29,7 +30,7 @@ export const NavLink = ({ linkProps, textProps, children }: NavLinkProps) => {
       <Text
         {...props}
         sx={{
-          color: isHighlighted ? '#d9475a' : props.color,
+          color: isHighlighted ? "#d9475a" : props.color,
         }}
       >
         {children}
