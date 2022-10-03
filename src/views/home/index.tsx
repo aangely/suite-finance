@@ -6,7 +6,7 @@ import { PlainTable } from "./components/PlainTable";
 
 export const Page = () => {
   return (
-    <Container maxWidth="full" paddingX="100" color="#323c52" marginTop="60px">
+    <Container maxWidth="full" color="#323c52" marginTop="60px">
       <VStack alignItems="flex-start" spacing={12}>
         <IntroSection />
         <InvestSection />

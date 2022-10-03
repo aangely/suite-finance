@@ -1,6 +1,6 @@
 import create from "zustand";
 
-type PurchaseTime = "daily" | "weekly" | "monthly";
+export type PurchaseTime = "daily" | "weekly" | "monthly";
 
 export const usePurchaseStore = create<{
   time: PurchaseTime;

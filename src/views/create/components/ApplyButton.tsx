@@ -1,19 +1,38 @@
 import { Button } from "@chakra-ui/react";
+import shallow from "zustand/shallow";
 
+import { usePositionStore } from "@app/store/usePositionStore";
+import { usePurchaseStore } from "@app/store/usePurchaseStore";
 import { useReceiveStore } from "@app/store/useReceiveStore";
 import { useSellStore } from "@app/store/useSellStore";
 
 export const ApplyButton = () => {
   const total = useReceiveStore((state) => state.total);
   const sell = useSellStore((state) => state.balance);
-  const enabled = total === 100 && sell > 0;
+  const time = usePurchaseStore((state) => state.total);
+  const { positions, addPosition } = usePositionStore((state) => ({ positions: state.positions, addPosition: state.addPosition }), shallow);
+  const enabled = total === 100 && sell > 0 && time > 0;
   const color = enabled ? "#323C52" : "rgba(50, 60, 82, 1)";
+  const token = useSellStore.getState().token;
+  const tokens = useReceiveStore.getState().tokens;
+  const _time = usePurchaseStore.getState().time;
+  const startTime = usePurchaseStore.getState().startTime;
+  const lastId = positions.at(-1);
   return (
     <Button
       borderRadius="full"
       width="100%"
       disabled={!enabled}
       backgroundColor={color}
+      onClick={() =>
+        addPosition({
+          id: lastId ? lastId.id + 1 : 0,
+          token,
+          tokens,
+          time: _time,
+          startTime,
+        })
+      }
       _hover={{ backgroundColor: color }}
       _active={{ backgroundColor: color }}
     >

@@ -1,6 +1,6 @@
 import { Box, Flex, Image, Text, useTheme, VStack } from "@chakra-ui/react";
 import HighchartsReact from "highcharts-react-official";
-import Highcharts from "highcharts/highstock";
+import Highcharts, { color } from "highcharts/highstock";
 
 import { Card } from "@app/components/Card";
 import { useChartData } from "@app/hooks/useChartData";
@@ -13,9 +13,9 @@ import type { Token } from "@app/store/useSellStore";
 export const Chart = ({ token, symbol, data }: { token: Token; symbol: string; data: [number, number][] }) => {
   const { colors } = useTheme();
 
-  const startColor = colors.blue[100];
+  const startColor = colors.purple[100];
   const endColor = "rgba(255, 255, 255, 0.05)";
-  const lineColor = colors.blue[300];
+  const lineColor = colors.purple[300];
 
   const options: Highcharts.Options = {
     chart: {
@@ -44,7 +44,7 @@ export const Chart = ({ token, symbol, data }: { token: Token; symbol: string; d
       useHTML: true,
       headerFormat: "<div>{point.key}</div>",
       pointFormatter: function (this: { y?: number }) {
-        return `<div>Price: 1 (${token.symbol || ""}) = <b>${formatPrice(this?.y ?? 0)} ${symbol}</b></div>`;
+        return `<div>Current Price: 1 (${token.symbol || ""}) = <b>${formatPrice(this?.y ?? 0)} ${symbol}</b></div>`;
       },
       footerFormat: "",
     },
