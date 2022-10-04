@@ -8,6 +8,7 @@ import { Card } from "@app/components/Card";
 import { useChartData } from "@app/hooks/useChartData";
 import { usePositionStore } from "@app/store/usePositionStore";
 import { formatPrice } from "@app/utils/format";
+import { useIsConnected } from "@app/wallet";
 
 import type { Position } from "@app/store/usePositionStore";
 import type { FlexProps } from "@chakra-ui/react";
@@ -207,7 +208,9 @@ const DCard = ({ data, ...resProps }: Omit<FlexProps, "children"> & { data: Posi
 };
 
 export const DetailPositionCard = (props: Omit<FlexProps, "children">) => {
-  const position = usePositionStore((state) => state.position);
+  const isConnected = useIsConnected();
+  const _position = usePositionStore((state) => state.position);
+  const position = isConnected ? _position : null;
   return (
     <Flex {...props} backgroundColor="rgba(255, 255, 255, 0.6)" borderRadius="18px" padding="30px">
       <Text color="#323C52" fontWeight="600" fontSize="20px">

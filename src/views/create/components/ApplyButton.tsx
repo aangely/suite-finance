@@ -1,13 +1,17 @@
-import { Button, useToast } from "@chakra-ui/react";
+import { Button, useDisclosure, useToast } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import shallow from "zustand/shallow";
 
+import { WalletModal } from "@app/components/Layout/Wallet/WalletModal";
 import { usePositionStore } from "@app/store/usePositionStore";
 import { usePurchaseStore } from "@app/store/usePurchaseStore";
 import { useReceiveStore } from "@app/store/useReceiveStore";
 import { useSellStore } from "@app/store/useSellStore";
+import { useIsConnected } from "@app/wallet";
 
 export const ApplyButton = () => {
+  const isConnected = useIsConnected();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const total = useReceiveStore((state) => state.total);
   const sell = useSellStore((state) => state.balance);
@@ -24,44 +28,62 @@ export const ApplyButton = () => {
   const startTime = usePurchaseStore.getState().startTime;
   const lastId = positions.at(-1);
 
-  return (
-    <Button
-      borderRadius="full"
-      width="100%"
-      disabled={!enabled}
-      backgroundColor={color}
-      onClick={() => {
-        addPosition({
-          id: lastId ? lastId.id + 1 : 0,
-          token,
-          total: sell,
-          tokens,
-          time: _time,
-          startTime,
-          endTime: dayjs(startTime)
-            .add(time, _time === "daily" ? "day" : _time === "weekly" ? "week" : "year")
-            .toDate()
-            .toDateString(),
-          totalTime: time,
-          status: "pending",
-          rate: sell / time,
-        });
-        toast({
-          title: "Success.",
-          description: "We've created your position for you.",
-          position: "top-right",
-          status: "success",
-          duration: 9000,
-          isClosable: true,
-        });
-        useSellStore.getState().clear();
-        useReceiveStore.getState().clear();
-        usePurchaseStore.getState().clear();
-      }}
-      _hover={{ backgroundColor: color }}
-      _active={{ backgroundColor: color }}
-    >
-      Create Position
-    </Button>
-  );
+  if (isConnected) {
+    return (
+      <Button
+        borderRadius="full"
+        width="100%"
+        disabled={!enabled}
+        backgroundColor={color}
+        onClick={() => {
+          addPosition({
+            id: lastId ? lastId.id + 1 : 0,
+            token,
+            total: sell,
+            tokens,
+            time: _time,
+            startTime,
+            endTime: dayjs(startTime)
+              .add(time, _time === "daily" ? "day" : _time === "weekly" ? "week" : "year")
+              .toDate()
+              .toDateString(),
+            totalTime: time,
+            status: "pending",
+            rate: sell / time,
+          });
+          toast({
+            title: "Success.",
+            description: "We've created your position for you.",
+            position: "top-right",
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+          });
+          useSellStore.getState().clear();
+          useReceiveStore.getState().clear();
+          usePurchaseStore.getState().clear();
+        }}
+        _hover={{ backgroundColor: color }}
+        _active={{ backgroundColor: color }}
+      >
+        Create Position
+      </Button>
+    );
+  } else {
+    return (
+      <>
+        <Button
+          borderRadius="full"
+          width="100%"
+          onClick={onOpen}
+          backgroundColor="#009e86"
+          _hover={{ backgroundColor: "#009e86" }}
+          _active={{ backgroundColor: "#009e86" }}
+        >
+          Connect Wallet
+        </Button>
+        <WalletModal isOpen={isOpen} onClose={onClose} />
+      </>
+    );
+  }
 };

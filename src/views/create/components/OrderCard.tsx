@@ -4,10 +4,12 @@ import shallow from "zustand/shallow";
 import { Card } from "@app/components/Card";
 import { usePurchaseStore } from "@app/store/usePurchaseStore";
 import { useSellStore } from "@app/store/useSellStore";
+import { useIsConnected } from "@app/wallet";
 
 import type { FlexProps } from "@chakra-ui/react";
 
 export const OrderCard = (props: Omit<FlexProps, "children">) => {
+  const isConnected = useIsConnected();
   const { token, balance } = useSellStore((state) => ({ token: state.token, balance: state.balance }), shallow);
   const { time, total } = usePurchaseStore((state) => ({ time: state.time, total: state.total }), shallow);
   return (
@@ -31,7 +33,9 @@ export const OrderCard = (props: Omit<FlexProps, "children">) => {
         </InputGroup>
       </Flex>
       <Flex marginTop="6px" alignItems="center" justifyContent="space-between">
-        <Text fontWeight="600" fontSize="15px">{`every ${time === "daily" ? "day" : time === "monthly" ? "month" : "week"} for you for`}</Text>
+        <Text fontWeight="600" fontSize="15px">{`every ${
+          time === "daily" ? "day" : time === "monthly" ? "month" : "week"
+        } for you for`}</Text>
         <InputGroup width="50%">
           <Input
             background="linear-gradient(180deg, #8E2424 16.67%, #4D3737 100%)"
@@ -45,7 +49,7 @@ export const OrderCard = (props: Omit<FlexProps, "children">) => {
           </InputRightElement>
         </InputGroup>
       </Flex>
-      <Text marginTop="6px" fontSize="15px" fontWeight="400">{`Wallet balance: ${token.balance} ${token.symbol}`}</Text>
+      <Text marginTop="6px" fontSize="15px" fontWeight="400">{`Wallet balance: ${isConnected ? token.balance : 0} ${token.symbol}`}</Text>
     </Card>
   );
 };

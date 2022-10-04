@@ -1,6 +1,8 @@
-import { Button, HStack } from "@chakra-ui/react";
+import { HStack } from "@chakra-ui/react";
 
 import { NavLink } from "@app/components/NavLink";
+
+import { Wallet } from "../Wallet";
 
 export const Navbar = () => {
   return (
@@ -13,9 +15,11 @@ export const Navbar = () => {
         <NavLink linkProps={{ href: "/position" }}>Position</NavLink>
         <NavLink linkProps={{ href: "/docs" }}>Docs</NavLink>
       </HStack>
-      <Button backgroundColor="#D9475A" borderRadius={50}>
+      <Wallet />
+      {/* <Button backgroundColor="#D9475A" borderRadius={50} onClick={onOpen}>
         Connect Wallet
       </Button>
+      <WalletCard isOpen={isOpen} onClose={onClose} /> */}
     </HStack>
   );
 };

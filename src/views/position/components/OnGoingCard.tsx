@@ -1,13 +1,16 @@
 import { Box, Flex, Wrap, WrapItem } from "@chakra-ui/react";
 
 import { usePositionStore } from "@app/store/usePositionStore";
+import { useIsConnected } from "@app/wallet";
 
 import { GeneralPositionCard } from "./GeneralPositionCard";
 
 import type { FlexProps } from "@chakra-ui/react";
 
 export const OnGoingCard = (props: Omit<FlexProps, "children">) => {
-  const started = usePositionStore((state) => state.startedPositions);
+  const isConnected = useIsConnected();
+  const _started = usePositionStore((state) => state.startedPositions);
+  const started = isConnected ? _started : [];
   return (
     <Flex {...props} flexDirection="column" backgroundColor="rgba(255, 255, 255, 0.6)" borderRadius="18px" padding="30px">
       <Box

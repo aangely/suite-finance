@@ -1,20 +1,21 @@
 import { Box, Flex, Wrap, WrapItem } from "@chakra-ui/react";
 import shallow from "zustand/shallow";
 
-import { Card } from "@app/components/Card";
-import { Position, usePositionStore } from "@app/store/usePositionStore";
-import { tokenList } from "@app/store/useSellStore";
+import { usePositionStore } from "@app/store/usePositionStore";
+import { useIsConnected } from "@app/wallet";
 
 import { GeneralPositionCard } from "./GeneralPositionCard";
 
 import type { FlexProps } from "@chakra-ui/react";
 
 export const GeneratedCard = (props: Omit<FlexProps, "children">) => {
+  const isConnected = useIsConnected();
   const { finishedPositions, pendingPositions } = usePositionStore(
     (state) => ({ finishedPositions: state.finishedPositions, pendingPositions: state.pendingPositions }),
     shallow,
   );
-  const all = [...finishedPositions, ...pendingPositions];
+  const _all = [...finishedPositions, ...pendingPositions];
+  const all = isConnected ? _all : [];
   return (
     <Flex {...props} flexDirection="column" backgroundColor="rgba(255, 255, 255, 0.6)" borderRadius="18px" padding="30px">
       <Box
