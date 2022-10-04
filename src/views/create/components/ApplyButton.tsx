@@ -1,6 +1,5 @@
 import { Button, useToast } from "@chakra-ui/react";
 import dayjs from "dayjs";
-import { useEffect } from "react";
 import shallow from "zustand/shallow";
 
 import { usePositionStore } from "@app/store/usePositionStore";
@@ -45,8 +44,6 @@ export const ApplyButton = () => {
             .toDateString(),
           totalTime: time,
           status: "pending",
-          swapped: 0,
-          remaining: [],
           rate: sell / time,
         });
         toast({

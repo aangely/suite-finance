@@ -18,7 +18,11 @@ export const useReceiveStore = create<{
   addToken: (token) => {
     const prevState = get();
     const exist = prevState.tokens;
-    set({ tokens: [...exist, { ...token, percent: 0 }] });
+    if (!exist.length) {
+      set({ tokens: [{ ...token, percent: 100 }] });
+    } else {
+      set({ tokens: [...exist, { ...token, percent: 0 }] });
+    }
   },
   setPercent: (token, percent) => {
     const prevState = get();

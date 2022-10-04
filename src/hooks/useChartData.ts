@@ -75,6 +75,7 @@ export const useChartData = (sellSlug: string, receiveSlugs: string[]) => {
   return receiveData?.map(({ slug, data: { prices, price_change } }) => ({
     slug,
     price_change,
+    rawPrices: prices,
     data: constructPriceChartData({
       prices,
       calculatePrice: ([time, price], index) =>

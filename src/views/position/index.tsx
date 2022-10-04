@@ -1,5 +1,6 @@
-import { Flex, HStack, SimpleGrid } from "@chakra-ui/react";
+import { Flex, SimpleGrid } from "@chakra-ui/react";
 
+import { DetailPositionCard } from "./components/DetailPositionCard";
 import { GeneratedCard } from "./components/GeneratedCard";
 import { IntroSection } from "./components/IntroSection";
 import { OnGoingCard } from "./components/OnGoingCard";
@@ -12,6 +13,7 @@ export const Page = () => {
         <OnGoingCard />
         <GeneratedCard />
       </SimpleGrid>
+      <DetailPositionCard marginTop='33px' />
     </Flex>
   );
 };

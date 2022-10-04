@@ -18,18 +18,18 @@ export type Position = {
   startTime: string;
   endTime: string;
   status: "started" | "pending" | "finished";
-  swapped: number;
   rate: number;
-  remaining: Array<Token & { withdraw: number }>;
 };
 
 export const usePositionStore = create<{
+  position: Position | null;
   pendingPositions: Position[];
   startedPositions: Position[];
   finishedPositions: Position[];
+  setPosition: (p: Position) => void;
   addPosition: (p: Position) => void;
 }>((set, get) => ({
-  positions: [],
+  position: null,
   pendingPositions: [
     {
       id: 0,
@@ -72,8 +72,6 @@ export const usePositionStore = create<{
       endTime: "Tue Nov 22 2022",
       totalTime: 5,
       status: "pending",
-      swapped: 0,
-      remaining: [],
       rate: 400,
     },
   ],
@@ -89,8 +87,6 @@ export const usePositionStore = create<{
       endTime: dayjs().add(5, "week").toDate().toDateString(),
       status: "started",
       rate: 10 / 8,
-      swapped: 10 * ((10 / 8) * 2),
-      remaining: [],
     },
   ],
   finishedPositions: [
@@ -105,9 +101,8 @@ export const usePositionStore = create<{
       endTime: dayjs().add(-2, "week").toDate().toDateString(),
       status: "finished",
       rate: 110 / 6,
-      swapped: 110,
-      remaining: tokenList.slice(2, 6).map((token) => ({ ...token, withdraw: 110 / 4 })),
     },
   ],
+  setPosition: (p) => set({ position: p }),
   addPosition: (p) => set({ pendingPositions: [...get().pendingPositions, p] }),
 }));

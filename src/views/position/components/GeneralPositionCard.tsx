@@ -1,8 +1,9 @@
 import { Button, Image, Text, VStack, Wrap, WrapItem } from "@chakra-ui/react";
 
 import { Card } from "@app/components/Card";
+import { usePositionStore } from "@app/store/usePositionStore";
 
-import type { Position } from "@app/store/usePositionStore";
+import type { Position} from "@app/store/usePositionStore";
 import type { FlexProps } from "@chakra-ui/react";
 
 export const GeneralPositionCard = ({ data, ...resProps }: Omit<FlexProps, "children"> & { data: Position }) => {
@@ -31,6 +32,7 @@ export const GeneralPositionCard = ({ data, ...resProps }: Omit<FlexProps, "chil
           height="32px"
           width="100%"
           fontWeight="700"
+          onClick={() => usePositionStore.getState().setPosition(data)}
           _hover={{ backgroundColor: "#323C52" }}
           _active={{ backgroundColor: "#323C52" }}
         >
