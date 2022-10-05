@@ -6,7 +6,7 @@ import { tokenList } from "./useSellStore";
 import type { PurchaseTime } from "./usePurchaseStore";
 import type { Token } from "./useSellStore";
 
-type TargetToken = Token & { percent: number };
+export type TargetToken = Token & { percent: number };
 
 export type Position = {
   id: number;

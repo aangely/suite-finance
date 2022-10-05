@@ -21,7 +21,7 @@ import shallow from "zustand/shallow";
 import { Card } from "@app/components/Card";
 import { useDebouncedValue } from "@app/hooks/useDebouncedValue";
 import { useReceiveStore } from "@app/store/useReceiveStore";
-import { tokenListSearch, useSellStore } from "@app/store/useSellStore";
+import { tokenList, tokenListSearch, useSellStore } from "@app/store/useSellStore";
 
 import type { FlexProps } from "@chakra-ui/react";
 
@@ -30,7 +30,7 @@ export const SellCard = (props: Omit<FlexProps, "children">) => {
   const [value, setValue] = useState("");
   const { isOpen, onClose: _onClose, onOpen } = useDisclosure();
   const debouncedValue = useDebouncedValue(value);
-  const result = useMemo(() => tokenListSearch.search(debouncedValue), [debouncedValue]);
+  const _result = useMemo(() => tokenListSearch.search(debouncedValue), [debouncedValue]);
   const onClose = () => {
     setValue("");
     _onClose();
@@ -38,6 +38,7 @@ export const SellCard = (props: Omit<FlexProps, "children">) => {
   useEffect(() => {
     useReceiveStore.getState().removeToken({ ...token, percent: 0 });
   }, [token]);
+  const result = !_result.length ? tokenList.map((i) => ({ item: i })) : _result;
   return (
     <Card {...props}>
       <Text fontWeight="600">You sell</Text>
@@ -84,8 +85,8 @@ export const SellCard = (props: Omit<FlexProps, "children">) => {
               <Text fontWeight="600" fontSize="15px" lineHeight="18px" marginBottom="18px">
                 Token List
               </Text>
-              {!!debouncedValue.length && !Boolean(result.length) && (
-                <Flex alignItems="center">
+              {!!debouncedValue.length && !Boolean(_result.length) && (
+                <Flex alignItems="center" marginY="10px">
                   <Icon as={RiErrorWarningLine} color="#FFF000" width="20px" height="20px" />
                   <Text fontWeight="300" fontSize="15px" lineHeight="18px" marginLeft="10px">
                     No search result

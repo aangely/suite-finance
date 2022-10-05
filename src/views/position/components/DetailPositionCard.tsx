@@ -10,7 +10,7 @@ import { usePositionStore } from "@app/store/usePositionStore";
 import { formatPrice } from "@app/utils/format";
 import { useIsConnected } from "@app/wallet";
 
-import type { Position } from "@app/store/usePositionStore";
+import type { Position , TargetToken} from "@app/store/usePositionStore";
 import type { FlexProps } from "@chakra-ui/react";
 
 dayjs.extend(relativeTime);
@@ -31,7 +31,7 @@ const DCard = ({ data, ...resProps }: Omit<FlexProps, "children"> & { data: Posi
     targetTokens.map((t) => t.slug),
   );
   const swappedTargets = coinData?.map(({ slug, data, rawPrices }) => {
-    const targetToken = targetTokens.find((s) => s.slug === slug)!;
+    const targetToken = targetTokens.find((s) => s.slug === slug) as TargetToken;
     const swappedSource = (remaining * targetToken.percent) / 100;
     const prices = data.prices.at(-1)!;
     const targetIcon = swappedSource / prices[1];
@@ -85,7 +85,7 @@ const DCard = ({ data, ...resProps }: Omit<FlexProps, "children"> & { data: Posi
         </Box>
       </HStack>
       <Box
-        background="linear-gradient(90deg, #00FFD8 29.16%, #FF0021 45.41%)"
+        background={`linear-gradient(90deg, #00FFD8 ${percent}%, #FF0021 ${100 - +percent}%)`}
         height="8px"
         border="0.5px solid #613232"
         borderRadius="2px"
