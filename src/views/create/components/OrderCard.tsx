@@ -4,6 +4,7 @@ import shallow from "zustand/shallow";
 import { Card } from "@app/components/Card";
 import { usePurchaseStore } from "@app/store/usePurchaseStore";
 import { useSellStore } from "@app/store/useSellStore";
+import { formatPrice } from "@app/utils/format";
 import { useIsConnected } from "@app/wallet";
 
 import type { FlexProps } from "@chakra-ui/react";
@@ -24,7 +25,7 @@ export const OrderCard = (props: Omit<FlexProps, "children">) => {
             background="linear-gradient(180deg, #8E2424 16.67%, #4D3737 100%)"
             borderRadius="full"
             border="none"
-            value={balance}
+            value={total && balance ? formatPrice(balance / total) : balance}
             readOnly
           />
           <InputRightElement>
